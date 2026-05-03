@@ -25,7 +25,7 @@ body {
   color: var(--text);
 }
 
-.layout { height: 100vh; display: grid; grid-template-columns: 1fr 68px; }
+.layout { height: 100vh; display: grid; grid-template-columns: 1fr 46px; }
 
 .viewer { min-height: 0; padding: 10px; }
 
@@ -93,7 +93,7 @@ body {
   box-shadow: var(--shadow-hard);
   padding: 14px;
   position: fixed;
-  right: 82px;
+  right: 60px;
   top: 12px;
   z-index: 60;
   backdrop-filter: blur(24px) saturate(135%);
