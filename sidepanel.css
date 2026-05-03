@@ -17,53 +17,50 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
-  background:
-    radial-gradient(circle at 18% 8%, rgba(59, 130, 246, 0.12) 0, transparent 45%),
-    radial-gradient(circle at 82% 0%, rgba(20, 184, 166, 0.08) 0, transparent 42%),
-    var(--bg);
+  height: 100vh;
+  overflow: hidden;
   color: var(--text);
 }
 
-.layout { height: 100vh; display: grid; grid-template-columns: 1fr 40px; }
+.layout { height: 100%; display: grid; grid-template-rows: 40px minmax(0, 1fr); }
 
-.viewer { min-height: 0; padding: 10px; }
+.viewer { grid-row: 2; min-height: 0; padding: 0; }
 
 #siteFrame {
   width: 100%;
   height: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  border-radius: 18px;
+  border: 0;
+  border-radius: 0;
   background: #fff;
-  box-shadow: var(--shadow-soft);
+  box-shadow: none;
 }
 
 .right-sidebar {
+  grid-row: 1;
   display: grid;
-  grid-template-rows: 1fr auto;
-  justify-items: center;
-  align-items: start;
-  gap: 12px;
-  padding: 12px 6px;
-  border-left: 1px solid rgba(255, 255, 255, 0.9);
-  background: linear-gradient(180deg, rgba(255,255,255,0.72) 0%, rgba(246,248,252,0.88) 100%);
-  backdrop-filter: blur(18px) saturate(140%);
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 4px 8px;
 }
 
 .quick-menu {
   width: 100%;
-  display: grid;
+  height: 100%;
+  display: flex;
   gap: 8px;
-  align-content: start;
-  justify-items: center;
-  overflow-y: auto;
-  padding-bottom: 8px;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0;
 }
 
 .manage-toggle,
 .quick-menu .site-btn {
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
   border-radius: 12px;
   border: 1px solid transparent;
   background: var(--surface);
@@ -92,8 +89,8 @@ body {
   box-shadow: var(--shadow-hard);
   padding: 14px;
   position: fixed;
-  right: 52px;
-  top: 12px;
+  right: 12px;
+  top: 48px;
   z-index: 60;
   backdrop-filter: blur(24px) saturate(135%);
 }
@@ -146,20 +143,20 @@ body {
 }
 
 @media (max-width: 560px) {
-  .viewer { padding: 8px 6px; }
+  .viewer { padding: 0; }
 
   .layout {
-    grid-template-columns: 1fr 40px;
+    grid-template-rows: 40px minmax(0, 1fr);
   }
 
   .right-sidebar {
-    gap: 8px;
-    padding: 8px 4px;
+    gap: 6px;
+    padding: 4px 6px;
   }
 
   .manage-panel {
-    top: 8px;
-    right: 52px;
+    top: 48px;
+    right: 8px;
     max-width: calc(100vw - 64px);
     max-height: calc(100vh - 16px);
     overflow: auto;
