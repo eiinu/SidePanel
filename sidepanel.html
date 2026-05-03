@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>导航侧边栏</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>常用网站导航</h1>
+      <p>点击网站后在下方侧边栏区域内打开。</p>
+    </header>
+
+    <main class="layout">
+      <section class="nav-list" aria-label="网站列表">
+        <button class="site-btn" data-url="https://www.google.com">Google</button>
+        <button class="site-btn" data-url="https://github.com">GitHub</button>
+        <button class="site-btn" data-url="https://developer.chrome.com">Chrome Dev</button>
+        <button class="site-btn" data-url="https://news.ycombinator.com">Hacker News</button>
+      </section>
+
+      <section class="viewer" aria-label="网页浏览区域">
+        <div class="toolbar">
+          <input id="urlInput" type="url" placeholder="输入 URL 并回车，例如 https://example.com" />
+          <button id="goBtn">打开</button>
+        </div>
+        <p id="tips" class="tips">提示：部分网站因安全策略（X-Frame-Options / CSP）可能无法在 iframe 中显示。</p>
+        <iframe id="siteFrame" title="网页显示区域" src="https://example.com"></iframe>
+      </section>
+    </main>
+
+    <script src="sidepanel.js" type="module"></script>
+  </body>
+</html>

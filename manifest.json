@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "SidePanel Navigator",
+  "version": "0.1.0",
+  "description": "Open a navigation homepage in Chrome Side Panel and browse selected sites inside it.",
+  "permissions": ["sidePanel"],
+  "action": {
+    "default_title": "Open SidePanel Navigator"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
+}
