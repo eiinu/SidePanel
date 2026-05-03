@@ -3,7 +3,8 @@
   "name": "SidePanel Navigator",
   "version": "0.1.0",
   "description": "Open a navigation homepage in Chrome Side Panel and browse selected sites inside it.",
-  "permissions": ["sidePanel"],
+  "permissions": ["sidePanel", "webRequest", "webRequestBlocking"],
+  "host_permissions": ["<all_urls>"],
   "action": {
     "default_title": "Open SidePanel Navigator"
   },

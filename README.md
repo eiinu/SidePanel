@@ -16,3 +16,15 @@
 ## 说明
 
 由于网站安全策略限制（`X-Frame-Options` 或 `CSP frame-ancestors`），部分网站不能在 iframe 内嵌展示。这是浏览器安全机制导致的正常现象。
+
+
+## iframe 兼容增强（实验性）
+
+插件现在会通过 `webRequest` 在子框架响应阶段移除以下限制头：
+
+- `X-Frame-Options`
+- CSP 中的 `frame-ancestors` 指令
+
+这样可以让更多站点在 Side Panel 的 iframe 中打开。
+
+> 注意：这会削弱原网站的点击劫持防护，仅建议在你信任的本地开发/自用场景启用。
