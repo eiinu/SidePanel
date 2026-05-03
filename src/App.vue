@@ -9,6 +9,8 @@ const DEFAULT_SITES = [
 
 const STORAGE_KEY = 'custom_sites_v1';
 
+const IMAGE_ICON_RE = /^https?:\/\/\S+$/i;
+
 const normalizeUrl = (value) => {
   const raw = value.trim();
   if (!raw) return null;
@@ -30,6 +32,8 @@ const isManageOpen = ref(false);
 const editingIndex = ref(-1);
 
 const form = ref({ name: '', icon: '', url: '' });
+
+const isImageIcon = (icon) => IMAGE_ICON_RE.test((icon || '').trim());
 
 const saveSites = () => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(sites.value));
@@ -111,7 +115,14 @@ const removeSite = (index) => {
           type="button"
           @click="openInFrame(site.url)"
         >
-          {{ site.icon }}
+          <img
+            v-if="isImageIcon(site.icon)"
+            class="site-icon-img"
+            :src="site.icon"
+            :alt="`${site.name} 图标`"
+            loading="lazy"
+          />
+          <span v-else class="site-icon-text">{{ site.icon }}</span>
         </button>
       </div>
       <button class="manage-toggle" title="管理导航" @click="isManageOpen = !isManageOpen">⚙️</button>
@@ -121,7 +132,12 @@ const removeSite = (index) => {
       <h2>管理快捷网页</h2>
       <form class="site-form" @submit.prevent="upsertSite">
         <input v-model="form.name" type="text" placeholder="名称，例如 GitHub" required />
-        <input v-model="form.icon" type="text" placeholder="图标，例如 🐙" maxlength="2" required />
+        <input
+          v-model="form.icon"
+          type="text"
+          placeholder="图标：单个汉字 / 单个 emoji / 图片链接"
+          required
+        />
         <input v-model="form.url" type="url" placeholder="网址，例如 https://github.com" required />
         <button type="submit">{{ editingIndex >= 0 ? '保存修改' : '新增' }}</button>
         <button v-if="editingIndex >= 0" type="button" @click="resetForm">取消编辑</button>
@@ -129,7 +145,14 @@ const removeSite = (index) => {
 
       <ul class="site-list">
         <li v-for="(site, index) in sites" :key="`${site.url}-${index}`" class="site-item">
-          <span>{{ site.icon }}</span>
+          <img
+            v-if="isImageIcon(site.icon)"
+            class="site-icon-img"
+            :src="site.icon"
+            :alt="`${site.name} 图标`"
+            loading="lazy"
+          />
+          <span v-else class="site-icon-text">{{ site.icon }}</span>
           <div>
             <div>{{ site.name }}</div>
             <div class="site-url">{{ site.url }}</div>

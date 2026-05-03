@@ -49,6 +49,7 @@ body {
   gap: 8px;
   height: 40px;
   padding: 4px 8px;
+  border-bottom: 1px solid var(--line);
 }
 
 .quick-menu {
@@ -73,6 +74,20 @@ body {
   cursor: pointer;
   font-size: clamp(14px, 2.8vw, 18px);
   transition: 160ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-icon-img {
+  width: 18px;
+  height: 18px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.site-icon-text {
+  line-height: 1;
 }
 
 .quick-menu .site-btn:hover,
