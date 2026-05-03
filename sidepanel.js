@@ -1,8 +1,7 @@
 const DEFAULT_SITES = [
-  { name: 'Google', icon: '🔍', url: 'https://www.google.com' },
-  { name: 'GitHub', icon: '🐙', url: 'https://github.com' },
-  { name: 'Chrome Dev', icon: '🧩', url: 'https://developer.chrome.com' },
-  { name: 'Hacker News', icon: '📰', url: 'https://news.ycombinator.com' },
+  { name: 'ChatGPT', icon: '🤖', url: 'https://chatgpt.com' },
+  { name: '豆包', icon: '🫘', url: 'https://www.doubao.com' },
+  { name: 'Kimi', icon: '🌙', url: 'https://kimi.moonshot.cn' },
 ];
 const STORAGE_KEY = 'custom_sites_v1';
 
