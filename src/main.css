@@ -61,6 +61,7 @@ body {
   overflow-x: auto;
   overflow-y: hidden;
   padding-bottom: 0;
+  scrollbar-width: thin;
 }
 
 .manage-toggle,
@@ -97,8 +98,13 @@ body {
 
 .quick-menu .site-btn.is-active {
   border-color: rgba(59, 130, 246, 0.42);
-  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(235,243,255,0.95));
+  background: #f0f2f5;
+  transform: translateY(-1px);
   box-shadow: inset 0 0 0 1px var(--accent-soft);
+}
+
+.quick-menu .site-btn.is-active:hover {
+  background: #e9eef8;
 }
 
 .manage-panel {

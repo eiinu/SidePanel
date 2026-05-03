@@ -32,6 +32,7 @@ const isManageOpen = ref(false);
 const editingIndex = ref(-1);
 
 const form = ref({ name: '', icon: '', url: '' });
+const draggedIndex = ref(-1);
 
 const isImageIcon = (icon) => IMAGE_ICON_RE.test((icon || '').trim());
 
@@ -88,6 +89,26 @@ const removeSite = (index) => {
   }
   saveSites();
 };
+
+const handleMenuWheel = (event) => {
+  const menu = event.currentTarget;
+  if (!(menu instanceof HTMLElement)) return;
+  if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+  menu.scrollLeft += event.deltaY;
+};
+
+const onDragStart = (index) => {
+  draggedIndex.value = index;
+};
+
+const onDrop = (targetIndex) => {
+  const from = draggedIndex.value;
+  draggedIndex.value = -1;
+  if (from < 0 || from === targetIndex) return;
+  const moved = sites.value.splice(from, 1)[0];
+  sites.value.splice(targetIndex, 0, moved);
+  saveSites();
+};
 </script>
 
 <template>
@@ -104,7 +125,7 @@ const removeSite = (index) => {
     </section>
 
     <nav class="right-sidebar" aria-label="快捷导航侧栏">
-      <div class="quick-menu" role="tablist" aria-label="快捷网页">
+      <div class="quick-menu" role="tablist" aria-label="快捷网页" @wheel.prevent="handleMenuWheel">
         <button
           v-for="(site, index) in sites"
           :key="`${site.name}-${index}`"
@@ -113,7 +134,12 @@ const removeSite = (index) => {
           :title="site.name"
           role="tab"
           type="button"
+          draggable="true"
           @click="openInFrame(site.url)"
+          @dragstart="onDragStart(index)"
+          @dragover.prevent
+          @drop="onDrop(index)"
+          @dragend="draggedIndex = -1"
         >
           <img
             v-if="isImageIcon(site.icon)"
