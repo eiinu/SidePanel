@@ -28,6 +28,7 @@ const loadSites = () => {
 
 const sites = ref(loadSites());
 const activeUrl = ref(normalizeUrl(sites.value[0]?.url || 'https://example.com'));
+const openedUrls = ref(activeUrl.value ? [activeUrl.value] : []);
 const isManageOpen = ref(false);
 const editingIndex = ref(-1);
 
@@ -58,7 +59,11 @@ const openInFrame = (url) => {
   const normalized = normalizeUrl(url);
   if (!normalized) return;
   try {
-    activeUrl.value = new URL(normalized).toString();
+    const resolvedUrl = new URL(normalized).toString();
+    activeUrl.value = resolvedUrl;
+    if (!openedUrls.value.includes(resolvedUrl)) {
+      openedUrls.value.push(resolvedUrl);
+    }
   } catch {
     alert('请输入正确的网址，例如 https://example.com');
   }
@@ -96,7 +101,11 @@ const upsertSite = () => {
 
 const removeSite = (index) => {
   const removed = sites.value.splice(index, 1)[0];
-  if (normalizeUrl(removed.url) === activeUrl.value) {
+  const removedUrl = normalizeUrl(removed.url);
+  if (removedUrl) {
+    openedUrls.value = openedUrls.value.filter((url) => url !== removedUrl);
+  }
+  if (removedUrl === activeUrl.value) {
     openInFrame(sites.value[0]?.url || 'https://example.com');
   }
   saveSites();
@@ -127,9 +136,11 @@ const onDrop = (targetIndex) => {
   <main class="layout">
     <section class="viewer" aria-label="网页浏览区域">
       <iframe
-        id="siteFrame"
+        v-for="url in openedUrls"
+        :key="url"
         title="网页显示区域"
-        :src="frameUrl"
+        :src="url"
+        v-show="url === frameUrl"
         sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-popups-to-escape-sandbox"
         referrerpolicy="no-referrer-when-downgrade"
         allow="clipboard-read; clipboard-write"
