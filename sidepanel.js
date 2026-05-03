@@ -6,11 +6,7 @@ const DEFAULT_SITES = [
 ];
 const STORAGE_KEY = 'custom_sites_v1';
 
-const urlInput = document.getElementById('urlInput');
-const goBtn = document.getElementById('goBtn');
 const frame = document.getElementById('siteFrame');
-const floatingNav = document.querySelector('.floating-nav');
-const menuToggle = document.getElementById('menuToggle');
 const quickMenu = document.getElementById('quickMenu');
 const manageToggle = document.getElementById('manageToggle');
 const managePanel = document.getElementById('managePanel');
@@ -32,17 +28,17 @@ function saveSites() { localStorage.setItem(STORAGE_KEY, JSON.stringify(sites));
 function openInFrame(url) {
   const normalized = normalizeUrl(url);
   if (!normalized) return;
-  try { const parsed = new URL(normalized); frame.src = parsed.toString(); urlInput.value = parsed.toString(); }
+  try { const parsed = new URL(normalized); frame.src = parsed.toString(); }
   catch { alert('请输入正确的网址，例如 https://example.com'); }
 }
 
 function renderQuickMenu() {
   quickMenu.innerHTML = '';
-  sites.forEach((site, index) => {
+  sites.forEach((site) => {
     const btn = document.createElement('button');
     btn.className = 'site-btn'; btn.type = 'button'; btn.title = site.name; btn.textContent = site.icon;
-    btn.setAttribute('role', 'menuitem');
-    btn.addEventListener('click', () => { openInFrame(site.url); setMenuOpen(false); });
+    btn.setAttribute('role', 'tab');
+    btn.addEventListener('click', () => { openInFrame(site.url); });
     quickMenu.appendChild(btn);
   });
 }
@@ -63,7 +59,6 @@ function renderSiteList() {
 }
 
 function renderAll() { renderQuickMenu(); renderSiteList(); }
-function setMenuOpen(open) { floatingNav.classList.toggle('open', open); menuToggle.setAttribute('aria-expanded', String(open)); quickMenu.setAttribute('aria-hidden', String(!open)); }
 
 function startEdit(index) {
   const site = sites[index]; editingIndex = index;
@@ -75,7 +70,6 @@ function resetForm() {
   editingIndex = -1; siteForm.reset(); saveSiteBtn.textContent = '新增'; cancelEditBtn.hidden = true;
 }
 
-menuToggle.addEventListener('click', () => setMenuOpen(!floatingNav.classList.contains('open')));
 manageToggle.addEventListener('click', () => { managePanel.hidden = !managePanel.hidden; });
 
 siteForm.addEventListener('submit', (event) => {
@@ -87,11 +81,5 @@ siteForm.addEventListener('submit', (event) => {
 });
 
 cancelEditBtn.addEventListener('click', resetForm);
-goBtn.addEventListener('click', () => openInFrame(urlInput.value));
-urlInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') openInFrame(urlInput.value); });
-
-document.addEventListener('click', (event) => {
-  if (!floatingNav.contains(event.target)) setMenuOpen(false);
-});
 
 renderAll();
