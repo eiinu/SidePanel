@@ -25,7 +25,7 @@ body {
   color: var(--text);
 }
 
-.layout { height: 100vh; display: grid; grid-template-columns: 1fr clamp(48px, 12vw, 120px); }
+.layout { height: 100vh; display: grid; grid-template-columns: 1fr 40px; }
 
 .viewer { min-height: 0; padding: 10px; }
 
@@ -93,7 +93,7 @@ body {
   box-shadow: var(--shadow-hard);
   padding: 14px;
   position: fixed;
-  right: calc(clamp(48px, 12vw, 120px) + 12px);
+  right: 52px;
   top: 12px;
   z-index: 60;
   backdrop-filter: blur(24px) saturate(135%);
@@ -150,7 +150,7 @@ body {
   .viewer { padding: 8px 6px; }
 
   .layout {
-    grid-template-columns: 1fr clamp(42px, 18vw, 72px);
+    grid-template-columns: 1fr 40px;
   }
 
   .right-sidebar {
