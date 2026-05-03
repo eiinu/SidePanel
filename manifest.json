@@ -3,7 +3,7 @@
   "name": "SidePanel Navigator",
   "version": "0.1.0",
   "description": "Open a navigation homepage in Chrome Side Panel and browse selected sites inside it.",
-  "permissions": ["sidePanel", "webRequest", "webRequestBlocking"],
+  "permissions": ["sidePanel", "declarativeNetRequest"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_title": "Open SidePanel Navigator"
@@ -14,5 +14,14 @@
   },
   "side_panel": {
     "default_path": "sidepanel.html"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "strip_frame_protection_headers",
+        "enabled": true,
+        "path": "rules/remove-frame-limits.json"
+      }
+    ]
   }
 }

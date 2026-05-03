@@ -20,10 +20,11 @@
 
 ## iframe 兼容增强（实验性）
 
-插件现在会通过 `webRequest` 在子框架响应阶段移除以下限制头：
+插件现在会通过 MV3 支持的 `declarativeNetRequest` 静态规则在子框架响应阶段移除以下限制头：
 
 - `X-Frame-Options`
-- CSP 中的 `frame-ancestors` 指令
+- `Content-Security-Policy`（包含 `frame-ancestors`）
+- `Content-Security-Policy-Report-Only`
 
 这样可以让更多站点在 Side Panel 的 iframe 中打开。
 
