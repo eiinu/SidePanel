@@ -137,6 +137,7 @@ const onDrop = (targetIndex) => {
     <section class="viewer" aria-label="网页浏览区域">
       <iframe
         v-for="url in openedUrls"
+        class="site-frame"
         :key="url"
         title="网页显示区域"
         :src="url"
