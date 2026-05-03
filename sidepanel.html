@@ -4,37 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>导航侧边栏</title>
-    <link rel="stylesheet" href="sidepanel.css" />
   </head>
   <body>
-    <main class="layout">
-      <section class="viewer" aria-label="网页浏览区域">
-        <iframe
-          id="siteFrame"
-          title="网页显示区域"
-          src="https://example.com"
-          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-popups-to-escape-sandbox"
-          referrerpolicy="no-referrer-when-downgrade"
-          allow="clipboard-read; clipboard-write"
-        ></iframe>
-      </section>
-      <nav class="right-sidebar" aria-label="快捷导航侧栏">
-        <div id="quickMenu" class="quick-menu" role="tablist" aria-label="快捷网页"></div>
-        <button id="manageToggle" class="manage-toggle" title="管理导航">⚙️</button>
-      </nav>
-      <section id="managePanel" class="manage-panel" aria-label="导航管理" hidden>
-        <h2>管理快捷网页</h2>
-        <form id="siteForm" class="site-form">
-          <input id="siteNameInput" type="text" placeholder="名称，例如 GitHub" required />
-          <input id="siteIconInput" type="text" placeholder="图标，例如 🐙" maxlength="2" required />
-          <input id="siteUrlInput" type="url" placeholder="网址，例如 https://github.com" required />
-          <button id="saveSiteBtn" type="submit">新增</button>
-          <button id="cancelEditBtn" type="button" hidden>取消编辑</button>
-        </form>
-        <ul id="siteList" class="site-list"></ul>
-      </section>
-    </main>
-
-    <script src="sidepanel.js" type="module"></script>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
