@@ -8,29 +8,34 @@ body {
   min-height: 100vh;
 }
 
-.layout { height: 100vh; }
+.layout {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 56px;
+}
 
 .viewer {
-  display: grid;
-  grid-template-rows: auto auto 1fr;
   height: 100%;
   min-height: 0;
 }
+#siteFrame { width: 100%; height: 100%; border: 0; background: #fff; }
 
-.toolbar { display: flex; gap: 8px; padding: 10px 12px; }
-#urlInput { flex: 1; min-width: 0; padding: 8px; }
-#goBtn { padding: 8px 12px; }
-.tips { margin: 0; padding: 0 12px 8px; font-size: 12px; opacity: 0.7; }
-#siteFrame { width: 100%; height: 100%; border: 0; border-top: 1px solid #3b3b3b33; background: #fff; }
+.right-sidebar {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: center;
+  padding: 8px 6px;
+  border-left: 1px solid #3b3b3b33;
+  background: color-mix(in oklab, Canvas 94%, #4c80ff 6%);
+}
 
-.floating-nav { position: fixed; right: 14px; bottom: 20px; display: grid; justify-items: center; gap: 10px; z-index: 50; }
-.menu-toggle, .manage-toggle, .quick-menu .site-btn {
-  width: 46px; height: 46px; border-radius: 50%; border: 1px solid #3b3b3b55;
+.manage-toggle, .quick-menu .site-btn {
+  width: 42px; height: 42px; border-radius: 999px; border: 1px solid #3b3b3b55;
   background: color-mix(in oklab, Canvas 86%, #4c80ff 14%); box-shadow: 0 8px 24px #0000002a;
   cursor: pointer; font-size: 20px;
 }
-.quick-menu { display: grid; gap: 8px; opacity: 0; transform: translateY(8px) scale(0.94); pointer-events: none; transition: opacity 160ms ease, transform 160ms ease; }
-.floating-nav.open .quick-menu { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.quick-menu { display: grid; align-content: start; gap: 8px; overflow-y: auto; padding-bottom: 8px; }
 
 .manage-panel {
   width: min(320px, 86vw);
@@ -39,6 +44,10 @@ body {
   border-radius: 12px;
   box-shadow: 0 12px 32px #00000030;
   padding: 12px;
+  position: fixed;
+  right: 68px;
+  top: 12px;
+  z-index: 60;
 }
 .manage-panel h2 { margin: 0 0 10px; font-size: 14px; }
 .site-form { display: grid; gap: 6px; margin-bottom: 10px; }
