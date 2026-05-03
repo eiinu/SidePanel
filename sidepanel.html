@@ -7,19 +7,7 @@
     <link rel="stylesheet" href="sidepanel.css" />
   </head>
   <body>
-    <header class="header">
-      <h1>常用网站导航</h1>
-      <p>点击网站后在下方侧边栏区域内打开。</p>
-    </header>
-
     <main class="layout">
-      <section class="nav-list" aria-label="网站列表">
-        <button class="site-btn" data-url="https://www.google.com">Google</button>
-        <button class="site-btn" data-url="https://github.com">GitHub</button>
-        <button class="site-btn" data-url="https://developer.chrome.com">Chrome Dev</button>
-        <button class="site-btn" data-url="https://news.ycombinator.com">Hacker News</button>
-      </section>
-
       <section class="viewer" aria-label="网页浏览区域">
         <div class="toolbar">
           <input id="urlInput" type="url" placeholder="输入 URL 并回车，例如 https://example.com" />
@@ -29,6 +17,23 @@
         <iframe id="siteFrame" title="网页显示区域" src="https://example.com"></iframe>
       </section>
     </main>
+
+    <nav class="floating-nav" aria-label="快捷导航">
+      <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="quickMenu" title="快捷导航">☰</button>
+      <div id="quickMenu" class="quick-menu" role="menu" aria-hidden="true"></div>
+      <button id="manageToggle" class="manage-toggle" title="管理导航">⚙️</button>
+      <section id="managePanel" class="manage-panel" aria-label="导航管理" hidden>
+        <h2>管理快捷网页</h2>
+        <form id="siteForm" class="site-form">
+          <input id="siteNameInput" type="text" placeholder="名称，例如 GitHub" required />
+          <input id="siteIconInput" type="text" placeholder="图标，例如 🐙" maxlength="2" required />
+          <input id="siteUrlInput" type="url" placeholder="网址，例如 https://github.com" required />
+          <button id="saveSiteBtn" type="submit">新增</button>
+          <button id="cancelEditBtn" type="button" hidden>取消编辑</button>
+        </form>
+        <ul id="siteList" class="site-list"></ul>
+      </section>
+    </nav>
 
     <script src="sidepanel.js" type="module"></script>
   </body>
