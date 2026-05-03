@@ -42,6 +42,18 @@ const saveSites = () => {
 
 const frameUrl = computed(() => activeUrl.value || 'https://example.com');
 
+const isSiteActive = (siteUrl) => {
+  const normalized = normalizeUrl(siteUrl);
+  if (!normalized || !activeUrl.value) return false;
+  try {
+    const current = new URL(activeUrl.value).toString();
+    const target = new URL(normalized).toString();
+    return current.startsWith(target);
+  } catch {
+    return false;
+  }
+};
+
 const openInFrame = (url) => {
   const normalized = normalizeUrl(url);
   if (!normalized) return;
@@ -130,7 +142,7 @@ const onDrop = (targetIndex) => {
           v-for="(site, index) in sites"
           :key="`${site.name}-${index}`"
           class="site-btn"
-          :class="{ 'is-active': normalizeUrl(site.url) === activeUrl }"
+          :class="{ 'is-active': isSiteActive(site.url) }"
           :title="site.name"
           role="tab"
           type="button"
