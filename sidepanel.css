@@ -27,15 +27,15 @@ body {
 
 .layout { height: 100vh; display: grid; grid-template-columns: 1fr 40px; }
 
-.viewer { min-height: 0; padding: 10px; }
+.viewer { min-height: 0; padding: 0; }
 
 #siteFrame {
   width: 100%;
   height: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  border-radius: 18px;
+  border: 0;
+  border-radius: 0;
   background: #fff;
-  box-shadow: var(--shadow-soft);
+  box-shadow: none;
 }
 
 .right-sidebar {
@@ -146,7 +146,7 @@ body {
 }
 
 @media (max-width: 560px) {
-  .viewer { padding: 8px 6px; }
+  .viewer { padding: 0; }
 
   .layout {
     grid-template-columns: 1fr 40px;
