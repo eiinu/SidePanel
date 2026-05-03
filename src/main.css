@@ -49,6 +49,7 @@ body {
   gap: 8px;
   height: 40px;
   padding: 4px 8px;
+  border-bottom: 1px solid var(--line);
 }
 
 .quick-menu {
@@ -60,6 +61,7 @@ body {
   overflow-x: auto;
   overflow-y: hidden;
   padding-bottom: 0;
+  scrollbar-width: thin;
 }
 
 .manage-toggle,
@@ -73,6 +75,20 @@ body {
   cursor: pointer;
   font-size: clamp(14px, 2.8vw, 18px);
   transition: 160ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-icon-img {
+  width: 18px;
+  height: 18px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.site-icon-text {
+  line-height: 1;
 }
 
 .quick-menu .site-btn:hover,
@@ -81,9 +97,11 @@ body {
 }
 
 .quick-menu .site-btn.is-active {
-  border-color: rgba(59, 130, 246, 0.42);
-  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(235,243,255,0.95));
-  box-shadow: inset 0 0 0 1px var(--accent-soft);
+  background: #f0f2f5;
+}
+
+.quick-menu .site-btn.is-active:hover {
+  background: #eceff4;
 }
 
 .manage-panel {
