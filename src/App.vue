@@ -1,5 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const DEFAULT_SITES = [
   { name: 'ChatGPT', icon: '🤖', url: 'https://chatgpt.com' },
@@ -65,7 +68,7 @@ const openInFrame = (url) => {
       openedUrls.value.push(resolvedUrl);
     }
   } catch {
-    alert('请输入正确的网址，例如 https://example.com');
+    alert(t('ui.invalidUrl'));
   }
 };
 
@@ -134,12 +137,12 @@ const onDrop = (targetIndex) => {
 
 <template>
   <main class="layout">
-    <section class="viewer" aria-label="网页浏览区域">
+    <section class="viewer" :aria-label="t('ui.viewerArea')">
       <iframe
         v-for="url in openedUrls"
         class="site-frame"
         :key="url"
-        title="网页显示区域"
+        :title="t('ui.frameTitle')"
         :src="url"
         v-show="url === frameUrl"
         sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-popups-to-escape-sandbox"
@@ -148,8 +151,8 @@ const onDrop = (targetIndex) => {
       ></iframe>
     </section>
 
-    <nav class="right-sidebar" aria-label="快捷导航侧栏">
-      <div class="quick-menu" role="tablist" aria-label="快捷网页" @wheel.prevent="handleMenuWheel">
+    <nav class="right-sidebar" :aria-label="t('ui.quickSidebar')">
+      <div class="quick-menu" role="tablist" :aria-label="t('ui.quickSites')" @wheel.prevent="handleMenuWheel">
         <button
           v-for="(site, index) in sites"
           :key="`${site.name}-${index}`"
@@ -169,28 +172,28 @@ const onDrop = (targetIndex) => {
             v-if="isImageIcon(site.icon)"
             class="site-icon-img"
             :src="site.icon"
-            :alt="`${site.name} 图标`"
+            :alt="t('ui.iconAlt', { name: site.name })"
             loading="lazy"
           />
           <span v-else class="site-icon-text">{{ site.icon }}</span>
         </button>
       </div>
-      <button class="manage-toggle" title="管理导航" @click="isManageOpen = !isManageOpen">⚙️</button>
+      <button class="manage-toggle" :title="t('ui.manageNav')" @click="isManageOpen = !isManageOpen">⚙️</button>
     </nav>
 
-    <section class="manage-panel" aria-label="导航管理" v-show="isManageOpen">
-      <h2>管理快捷网页</h2>
+    <section class="manage-panel" :aria-label="t('ui.managePanel')" v-show="isManageOpen">
+      <h2>{{ t('ui.manageQuickSites') }}</h2>
       <form class="site-form" @submit.prevent="upsertSite">
-        <input v-model="form.name" type="text" placeholder="名称，例如 GitHub" required />
+        <input v-model="form.name" type="text" :placeholder="t('ui.inputName')" required />
         <input
           v-model="form.icon"
           type="text"
-          placeholder="图标：单个汉字 / 单个 emoji / 图片链接"
+          :placeholder="t('ui.inputIcon')"
           required
         />
-        <input v-model="form.url" type="url" placeholder="网址，例如 https://github.com" required />
-        <button type="submit">{{ editingIndex >= 0 ? '保存修改' : '新增' }}</button>
-        <button v-if="editingIndex >= 0" type="button" @click="resetForm">取消编辑</button>
+        <input v-model="form.url" type="url" :placeholder="t('ui.inputUrl')" required />
+        <button type="submit">{{ editingIndex >= 0 ? t('ui.save') : t('ui.add') }}</button>
+        <button v-if="editingIndex >= 0" type="button" @click="resetForm">{{ t('ui.cancel') }}</button>
       </form>
 
       <ul class="site-list">
@@ -199,7 +202,7 @@ const onDrop = (targetIndex) => {
             v-if="isImageIcon(site.icon)"
             class="site-icon-img"
             :src="site.icon"
-            :alt="`${site.name} 图标`"
+            :alt="t('ui.iconAlt', { name: site.name })"
             loading="lazy"
           />
           <span v-else class="site-icon-text">{{ site.icon }}</span>
@@ -207,8 +210,8 @@ const onDrop = (targetIndex) => {
             <div>{{ site.name }}</div>
             <div class="site-url">{{ site.url }}</div>
           </div>
-          <button type="button" @click="startEdit(index)">编辑</button>
-          <button type="button" @click="removeSite(index)">删除</button>
+          <button type="button" @click="startEdit(index)">{{ t('ui.edit') }}</button>
+          <button type="button" @click="removeSite(index)">{{ t('ui.remove') }}</button>
         </li>
       </ul>
     </section>
