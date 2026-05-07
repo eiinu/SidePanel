@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -42,6 +42,29 @@ const isImageIcon = (icon) => IMAGE_ICON_RE.test((icon || '').trim());
 
 const saveSites = () => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(sites.value));
+};
+
+
+const consumePendingAddSite = async () => {
+  if (!chrome?.storage?.local) return;
+
+  const { pendingAddSite } = await chrome.storage.local.get('pendingAddSite');
+  if (!pendingAddSite) return;
+
+  await chrome.storage.local.remove('pendingAddSite');
+
+  const url = normalizeUrl(pendingAddSite.url || '');
+  if (!url) return;
+
+  const exists = sites.value.some((site) => normalizeUrl(site.url) === url);
+  if (exists) return;
+
+  sites.value.push({
+    name: (pendingAddSite.name || url).trim(),
+    icon: (pendingAddSite.icon || '🌐').trim() || '🌐',
+    url
+  });
+  saveSites();
 };
 
 const frameUrl = computed(() => activeUrl.value || 'https://example.com');
@@ -133,6 +156,17 @@ const onDrop = (targetIndex) => {
   sites.value.splice(targetIndex, 0, moved);
   saveSites();
 };
+
+onMounted(async () => {
+  await consumePendingAddSite();
+
+  if (!chrome?.storage?.onChanged) return;
+
+  chrome.storage.onChanged.addListener(async (changes, areaName) => {
+    if (areaName !== 'local' || !changes.pendingAddSite) return;
+    await consumePendingAddSite();
+  });
+});
 </script>
 
 <template>
