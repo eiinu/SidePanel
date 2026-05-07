@@ -74,18 +74,18 @@ chrome.runtime.onInstalled.addListener(async () => {
 });
 
 
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId !== CONTEXT_MENU_ID || !tab?.url) return;
 
-  await chrome.storage.local.set({
+  if (typeof tab.id === 'number') {
+    chrome.sidePanel.open({ tabId: tab.id });
+  }
+
+  chrome.storage.local.set({
     pendingAddSite: {
       name: tab.title || tab.url,
       url: tab.url,
       icon: normalizeFavicon(tab.favIconUrl)
     }
   });
-
-  if (typeof tab.id === 'number') {
-    await chrome.sidePanel.open({ tabId: tab.id });
-  }
 });
